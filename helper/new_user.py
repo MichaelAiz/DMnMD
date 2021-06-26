@@ -1,22 +1,17 @@
-from twilio.rest import Client
-from twilio.twiml.messaging_response import MessagingResponse
 from dotenv import load_dotenv
-import os
-#from create_new_user import
+from data import db_functions as db
 
 load_dotenv()
 
-account_sid = os.environ['TWILIO_ACCOUNT_SID']
-auth_token = os.environ['TWILIO_AUTH_TOKEN']
-client = Client(account_sid, auth_token)
 
-def new_user():
-    message = client.messages \
-                .create(
-                     body="Please enter your name and phone number",
-                     from_='+1',
-                     to='+1'
-                 )
-    
+def new_user(phone, message):
+    db.create_new_user(state="prompted", phone=phone)
+
+    txtResponse = {
+        'status': True,
+        'message': "Hello and welcome to DMdaMD! Please respond with your full name."
+    }
+
+    return txtResponse
 
 
