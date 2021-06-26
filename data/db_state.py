@@ -9,4 +9,4 @@ client = MongoClient(os.getenv("MONGO_URI"))
 
 
 def get_db_conn():
-    return client["myFirstDatabase"]
+    return client["DMnMD"]
