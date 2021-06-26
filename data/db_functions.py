@@ -1,7 +1,7 @@
 from data.db_state import get_db_conn
 
 
-def create_new_user(state, name, phone):
+def create_new_user(state=None, name=None, phone=None):
     new_user = {
         "state": state,
         "name": name,
