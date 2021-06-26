@@ -12,10 +12,10 @@ myclient = pymongo.MongoClient(os.environ["MONGO_URI"])
 mydb = myclient["DMnMD"]
 mycol = mydb["users"]
 
-def function_selector(phone_num, msg): 
 
+def function_selector(phone_num, msg):
     # Query db for matching number
-    query = { "phone": phone_num }
+    query = {"phone": phone_num}
     res = mycol.find_one(query)
 
     # Regex to count words
