@@ -37,38 +37,34 @@ function cancer() {
 function DoctorDashboard() {
     return (
         <View style={DoctorDashboardStyles.DoctorDashboard}>
-            <View style={DoctorDashboardStyles.Toolbar}>
-                <View style={DoctorDashboardStyles.ToolbarBackground} />
-                <Svg id='Patients' />
-            </View>
-            <img
-                src={home_icon}
-                style={{
-                    position: "absolute",
-                    top: 20,
-                    left: 10,
-                    width: 55,
-                    //height: 50,
-                }}/>
-            <TouchableOpacity onPress={onClickHome} style={DoctorDashboardStyles.HomeButton} />
-            <img
-                src={users_icon}
-                style={{
-                    position: "absolute",
-                    top: 120,
-                    left: 10,
-                    width: 55,
-                }} />
-            <TouchableOpacity onPress={onClickPatient} style={DoctorDashboardStyles.PatientButton} />
-            <img
-                src={signout_icon}
-                style={{
-                    position: "relative",
-                    top: window.innerHeight - 60,
-                    left: 17,
-                    width: 45,
-                    //height: 50,
-                }} />
+            <View style={DoctorDashboardStyles.ToolbarBackground} />
+                <img
+                    src={home_icon}
+                    style={{
+                        position: "absolute",
+                        top: 20,
+                        left: 10,
+                        width: 55,
+                    }}/>
+                <TouchableOpacity onPress={onClickHome} style={DoctorDashboardStyles.HomeButton} />
+                <img
+                    src={users_icon}
+                    style={{
+                        position: "absolute",
+                        top: 120,
+                        left: 10,
+                        width: 55,
+                    }} />
+                <TouchableOpacity onPress={onClickPatient} style={DoctorDashboardStyles.PatientButton} />
+                <img
+                    src={signout_icon}
+                    style={{
+                        position: "relative",
+                        top: window.innerHeight - 60,
+                        left: 17,
+                        width: 45,
+                        //height: 50,
+                    }} />
 
             <TouchableOpacity onPress={cancer} style={DoctorDashboardStyles.CancerButton} />    {/*Definitely not the cancer button*/}
 
@@ -90,20 +86,13 @@ const DoctorDashboardStyles = StyleSheet.create({
         height: window.innerHeight,
         backgroundColor: '#ffffff',
     },
-    Toolbar: {
+    ToolbarBackground: {
         position: 'absolute',
         left: 0,
         top: 0,
         width: 75,
         height: window.innerHeight,
         backgroundColor: 'blue',
-    },
-    ToolbarBackground: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        width: 75,
-        height: 1080,
     },
     Box4: {
         position: 'absolute',
