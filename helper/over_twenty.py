@@ -1,10 +1,11 @@
 from google.cloud import language_v1
 from data.db_functions import create_new_symptom, get_user
-#from word_search import word_search()
+from helper.word_search import word_search
 import os
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "E:/Projects/EngHack/auth.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = f"{os.getcwd()}/auth.json"
 client = language_v1.LanguageServiceClient()
+
 
 def over_twenty(phone_num, message):
     text = message
@@ -19,28 +20,33 @@ def over_twenty(phone_num, message):
     symptomMessage = ""
 
     for category in response.categories:
-        result[category.name] = category.confidence #Turn the categories into a dictionary of the form: {category.name: category.confidence}
+        # Turn the categories into a dictionary of the form: {category.name: category.confidence}
+        result[category.name] = category.confidence
         print(f"Category name: {category.name}")
         print(f"Category Confidence: {category.confidence}")
-        if("Health" in category.name and category.confidence > 0.4):
-             symptoms = word_search(message)
-             for symptom in symptoms:
-                 create_new_symptom(userID, symptom, message)
-                 symptomMessage = symptomMessage + ", " + symptom
+        if "Health" in category.name and category.confidence > 0.3:
+            symptoms = word_search(message)
+            for symptom in symptoms:
+                create_new_symptom(userID, symptom, message)
+                if len(symptomMessage) == 0:
+                    symptomMessage += symptom
+                else:
+                    symptomMessage = f"{symptomMessage}, {symptom}"
 
-
-
-
-    if(not result): #checks if the dictionary is empty to see if no categories were returned
+    if not result:  # checks if the dictionary is empty to see if no categories were returned
         symptoms = word_search(message)
+
         for symptom in symptoms:
             create_new_symptom(userID, symptom, message)
-            symptomMessage = symptomMessage + ", " + symptom
+            if len(symptomMessage) == 0:
+                symptomMessage += symptom
+            else:
+                symptomMessage = f"{symptomMessage}, {symptom}"
 
-    
     txtResponse = {
         'status': True,
-        'message': "These symptoms were recorded: " + symptomMessage
+        'message': "BEEP BOOP I'M A BOT. DMnMD recorded these symptoms: " + symptomMessage
     }
 
     return txtResponse
+
