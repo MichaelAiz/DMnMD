@@ -1,14 +1,16 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { Svg } from 'react-native-svg'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import ReactDOM from 'react-dom';
 
 // Pages
 import Homepage from './Homepage.js';
+import Messages from './Messages.js';
 
 // Images
 import home_icon from './Images/home.png';
 import signout_icon from './Images/sign-out.png';
+import message_icon from './Images/message.png';
+import users_icon from './Images/users.png';
 
 function onClickHome() {
     ReactDOM.render(
@@ -17,6 +19,19 @@ function onClickHome() {
         </React.StrictMode>,
         document.getElementById('root')
     );
+}
+
+function onClickMessage() {
+    ReactDOM.render(
+        <React.StrictMode>
+            <Messages />
+            </React.StrictMode >,
+        document.getElementById('root')
+    );
+}
+
+function onClickPatient() {
+    alert("You are already on this page.")
 }
 
 export default function PatientList() {
@@ -31,8 +46,19 @@ export default function PatientList() {
                     left: 10,
                     width: 55,
                     //height: 50,
-                }} />
+                }}
+                alt = "" />
             <TouchableOpacity onPress={onClickHome} style={PatientListStyles.HomeButton} />
+            <img
+                src={users_icon}
+                style={{
+                    position: "absolute",
+                    top: 120,
+                    left: 10,
+                    width: 55,
+                }}
+                alt="" />
+            <TouchableOpacity onPress={onClickPatient} style={PatientListStyles.PatientButton} />
             <img
                 src={signout_icon}
                 style={{
@@ -40,7 +66,20 @@ export default function PatientList() {
                     top: window.innerHeight - 60,
                     left: 17,
                     width: 45,
-                }} />
+                }}
+                alt="" />
+            <TouchableOpacity onPress={onClickHome} style={PatientListStyles.SignOutButton} />
+            <img
+                src={message_icon}
+                style={{
+                    position: "absolute",
+                    top: 230,
+                    left: 10,
+                    width: 55,
+                    height: 50,
+                }}
+                alt="" />
+            <TouchableOpacity onPress={onClickMessage} style={PatientListStyles.MessageButton} />
             <View style={PatientListStyles.BigPatientBox}>
             <Text style={PatientListStyles.Patients}>
                 Patients:
@@ -455,5 +494,26 @@ const PatientListStyles = StyleSheet.create({
         top: 15,
         width: 75,
         height: 60,
+    },
+    PatientButton: {
+        position: 'absolute',
+        left: 0,
+        top: 110,
+        width: 75,
+        height: 60,
+    },
+    MessageButton: {
+        left: 0,
+        top: 130,
+        width: 75,
+        height: 60,
+        //backgroundColor: 'green'
+    },
+    SignOutButton: {
+        left: 0,
+        top: 860,
+        width: 75,
+        height: 60,
+        //backgroundColor: 'green'
     },
 })

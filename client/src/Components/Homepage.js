@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from 'react-native'
-import styled from 'styled-components';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import ReactDOM from 'react-dom';
 import DoctorDashboard from './Doctor_Dashboard';
 
@@ -25,7 +24,8 @@ function Homepage() {
                 style={{
                     width: window.innerWidth,
                     height: window.innerHeight
-                }} />
+                }}
+                alt = "" />
             <img
                 src={logo_image}
                 style={{
@@ -34,7 +34,8 @@ function Homepage() {
                     top: 5,
                     width: 199,
                     height: 64
-                }} />
+                }}
+                alt = "" />
             <img
                 src={logo_image}
                 style={{
@@ -43,7 +44,8 @@ function Homepage() {
                     top: 164,
                     width: 513,
                     height: 165
-                }} />
+                }}
+                alt = "" />
             {/*<View style={HomepageStyles.LoginButton}>*/}
             {/*    <View style={HomepageStyles.Rectangle2} />*/}
             {/*    <Text style={HomepageStyles.LoginText}>*/}

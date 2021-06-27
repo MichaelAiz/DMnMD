@@ -1,16 +1,17 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from 'react-native'
-import { Svg } from 'react-native-svg'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import ReactDOM from 'react-dom';
 
 // Pages
 import Homepage from './Homepage.js';
 import PatientList from './Patient_List2.js';
+import Messages from './Messages.js';
 
 // Images
 import home_icon from './Images/home.png';
 import signout_icon from './Images/sign-out.png';
 import users_icon from './Images/users.png';
+import message_icon from './Images/message.png';
 
 function onClickHome() {
     ReactDOM.render(
@@ -25,6 +26,15 @@ function onClickPatient() {
     ReactDOM.render(
         <React.StrictMode>
             <PatientList />
+        </React.StrictMode>,
+        document.getElementById('root')
+    );
+}
+
+function onClickMessage() {
+    ReactDOM.render(
+        <React.StrictMode>
+            <Messages />
         </React.StrictMode>,
         document.getElementById('root')
     );
@@ -45,7 +55,8 @@ function DoctorDashboard() {
                         top: 20,
                         left: 10,
                         width: 55,
-                    }}/>
+                    }}
+                    alt = "" />
                 <TouchableOpacity onPress={onClickHome} style={DoctorDashboardStyles.HomeButton} />
                 <img
                     src={users_icon}
@@ -54,8 +65,19 @@ function DoctorDashboard() {
                         top: 120,
                         left: 10,
                         width: 55,
-                    }} />
+                    }}
+                    alt = "" />
                 <TouchableOpacity onPress={onClickPatient} style={DoctorDashboardStyles.PatientButton} />
+                <img
+                src={message_icon}
+                style={{
+                    position: "absolute",
+                    top: 230,
+                    left: 10,
+                    width: 55,
+                    height: 50,
+                }}
+                alt = "" />
                 <img
                     src={signout_icon}
                     style={{
@@ -63,9 +85,10 @@ function DoctorDashboard() {
                         top: window.innerHeight - 60,
                         left: 17,
                         width: 45,
-                        //height: 50,
-                    }} />
-
+                    }}
+                alt="" />
+            <TouchableOpacity onPress={onClickMessage} style={DoctorDashboardStyles.MessageButton} />
+            <TouchableOpacity onPress={onClickHome} style={DoctorDashboardStyles.SignOutButton}/>
             <TouchableOpacity onPress={cancer} style={DoctorDashboardStyles.CancerButton} />    {/*Definitely not the cancer button*/}
 
             <View style={DoctorDashboardStyles.Box4} />
@@ -169,6 +192,20 @@ const DoctorDashboardStyles = StyleSheet.create({
         top: 110,
         width: 75,
         height: 60,
+    },
+    MessageButton: {
+        left: 0,
+        top: 190,
+        width: 75,
+        height: 60,
+        //backgroundColor: 'green'
+    },
+    SignOutButton: {
+        left: 0,
+        top: 800,
+        width: 75,
+        height: 60,
+        //backgroundColor: 'green'
     },
     CancerButton: {
         position: "absolute",
