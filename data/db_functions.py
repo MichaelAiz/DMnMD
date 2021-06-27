@@ -36,7 +36,7 @@ def create_new_symptom(user_id, symptom, content):
         'content': content
     }
 
-    symptoms = get_db_conn()["messages"]
+    symptoms = get_db_conn()["symptoms"]
     new_symptom_id = symptoms.insert_one(new_symptom).inserted_id
 
     new_symptom["_id"] = new_symptom_id
