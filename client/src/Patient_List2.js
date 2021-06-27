@@ -33,7 +33,14 @@ export default function PatientList() {
                     //height: 50,
                 }} />
             <TouchableOpacity onPress={onClickHome} style={PatientListStyles.HomeButton} />
-
+            <img
+                src={signout_icon}
+                style={{
+                    position: "relative",
+                    top: window.innerHeight - 60,
+                    left: 17,
+                    width: 45,
+                }} />
             <View style={PatientListStyles.BigPatientBox}>
             <Text style={PatientListStyles.Patients}>
                 Patients:
@@ -128,16 +135,16 @@ const PatientListStyles = StyleSheet.create({
     },
     BigPatientBox: {
         position: 'absolute',
-        left: 157.5,
-        top: 50,
-        width: 1680,
-        height: 860,
+        left: (window.innerWidth - (window.innerWidth * 0.85)) -75 ,
+        top: (window.innerHeight / 2) - ((window.innerHeight * 0.9) / 2),
+        width: window.innerWidth * 0.85,
+        height: window.innerHeight * 0.90,
         backgroundColor: '#c4c4c4',
         borderRadius: 15,
     },
     Patients: {
         position: 'relative',
-        left: 15,
+        left: 25,
         top: 25,
         width: 233,
         height: 93,
@@ -159,7 +166,7 @@ const PatientListStyles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
-        width: 1600,
+        width: (window.innerWidth * 0.85) * 0.95,
         height: 70,
         backgroundColor: '#ffffff',
         borderRadius: 15,
@@ -201,7 +208,7 @@ const PatientListStyles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
-        width: 1600,
+        width: (window.innerWidth * 0.85) * 0.95,
         height: 70,
         backgroundColor: '#ffffff',
         borderRadius: 15,
@@ -243,7 +250,7 @@ const PatientListStyles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
-        width: 1600,
+        width: (window.innerWidth * 0.85) * 0.95,
         height: 70,
         backgroundColor: '#ffffff',
         borderRadius: 15,
@@ -285,7 +292,7 @@ const PatientListStyles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
-        width: 1600,
+        width: (window.innerWidth * 0.85) * 0.95,
         height: 70,
         backgroundColor: '#ffffff',
         borderRadius: 15,
@@ -327,7 +334,7 @@ const PatientListStyles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
-        width: 1600,
+        width: (window.innerWidth * 0.85) * 0.95,
         height: 70,
         backgroundColor: '#ffffff',
         borderRadius: 15,
@@ -369,7 +376,7 @@ const PatientListStyles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
-        width: 1600,
+        width: (window.innerWidth * 0.85) * 0.95,
         height: 70,
         backgroundColor: '#ffffff',
         borderRadius: 15,
