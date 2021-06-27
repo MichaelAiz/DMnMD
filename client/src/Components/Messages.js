@@ -100,7 +100,7 @@ const MessageStyles = StyleSheet.create({
         top: 0,
         width: 75,
         height: window.innerHeight,
-        backgroundColor: 'blue',
+        backgroundColor: '#F0F8FF',
     },
     HomeButton: {
         position: 'absolute',

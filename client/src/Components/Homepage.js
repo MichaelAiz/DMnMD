@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import ReactDOM from 'react-dom';
-import DoctorDashboard from './Doctor_Dashboard';
+import PatientList from './Patient_List2'
 
 // Images
 import background_image from './Images/istockphoto-1220059380-612x612-blur.png';
@@ -10,7 +10,7 @@ import logo_image from './Images/DMnMD Logo 2.png';
 function onClick() {
     ReactDOM.render(
         <React.StrictMode>
-            <DoctorDashboard />
+            <PatientList />
         </React.StrictMode>,
         document.getElementById('root')
     );
