@@ -1,10 +1,12 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from 'react-native'
-import background_image from './Images/istockphoto-1220059380-612x612-blur.png';
-import logo_image from './Images/DMnMD Logo 2.png';
 import styled from 'styled-components';
 import ReactDOM from 'react-dom';
 import DoctorDashboard from './Doctor_Dashboard';
+
+// Images
+import background_image from './Images/istockphoto-1220059380-612x612-blur.png';
+import logo_image from './Images/DMnMD Logo 2.png';
 
 function onClick() {
     ReactDOM.render(

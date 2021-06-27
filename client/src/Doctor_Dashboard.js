@@ -1,10 +1,13 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import { Svg } from 'react-native-svg'
-import home_icon from './Images/home.png';
-import signout_icon from './Images/sign-out.png';
 import ReactDOM from 'react-dom';
 import Homepage from './Homepage.js';
+
+// Images
+import home_icon from './Images/home.png';
+import signout_icon from './Images/sign-out.png';
+import users_icon from './Images/users.png';
 
 function onClick() {
     ReactDOM.render(
@@ -44,7 +47,15 @@ function DoctorDashboard() {
                     left: 17,
                     width: 45,
                     //height: 50,
-                }}/>
+                }} />
+            <img
+                src={users_icon}
+                style={{
+                    position: "absolute",
+                    top: 120,
+                    left: 10,
+                    width: 55,
+                }} />
             <TouchableOpacity onPress={cancer} style={DoctorDashboardStyles.CancerButton} />    {/*Definitely not the cancer button*/}
 
             <View style={DoctorDashboardStyles.Box4} />
