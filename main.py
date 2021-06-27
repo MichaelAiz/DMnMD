@@ -1,7 +1,8 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from helper.function_selector import function_selector
 from helper.twilio_helper import generate_response
 from helper.new_user import new_user
+from data.db_functions import get_user
 
 app = Flask(__name__)
 
@@ -23,5 +24,54 @@ def recieve_msg():
 
     return response
 
+@app.route('./getUser', methods = ['GET'])
+def get_user():
+    id = None
+    phone_num = None
+    name = None
+    if ('id' in request.args):
+        id = int(request.args['id'])
+        user = get_user(id, phone_num, name)[0]
+        return jsonify(user)
+    if('phone_num' in request.args):
+        phone = request.args['phone_num']
+        user = get_user(id, phone_num, name)[0]
+        return jsonify(user)
+    if('name' in request.args):
+        name = request.args['name']
+        user = get_user(id, phone_num, name)[0]
+        return jsonify(user)
 
+@app.route('./getSymptoms', methods = ['GET'])
+def get_symptoms():
+    id = None
+    user_id = None
+    symptom = None
+    if('id' in request.args):
+        id = int(request.args['id'])
+        symptoms = get_symptoms(id, user_id, symptom)
+        return jsonify(symptoms) #should only return one symptom since id was specified
+    if('user_id' in request.args):
+        user_id = int(request.args['user_id'])
+        symptoms = get_symptoms(id, user_id, symptom)
+        return jsonify(symptoms) # should return all symptoms associated with user
+    if('symptom' in request.args):
+        symptom = request.args['symptom']
+        symptoms = get_symptoms(id, user_id, symptom)
+        return jsonify(symptoms) 
+    
+
+@app.route('./getMessages', methods = ['GET'])
+def get_messages():
+    id = None
+    user_id = None
+    if('id' in request.args):
+        id = int(request.args['id'])
+        messages=get_messages(id, user_id)
+        return jsonify(messages) #should return a specific message
+    if('user_id' in request.args):
+        user_id = int(request.args['user_id'])
+        messages=get_messages(id, user_id) 
+        return jsonify(messages) #should return all messages associated with user
+        
 app.run()
