@@ -38,16 +38,12 @@ def get_user():
     name = None
     if ('id' in request.args):
         id = int(request.args['id'])
-        user = get_user(id, phone_num, name)[0]
-        return jsonify(user)
     if('phone_num' in request.args):
         phone = request.args['phone_num']
-        user = get_user(id, phone_num, name)[0]
-        return jsonify(user)
     if('name' in request.args):
         name = request.args['name']
-        user = get_user(id, phone_num, name)[0]
-        return jsonify(user)
+    user = get_user(id, phone_num, name)
+    return jsonify(user)
 
 @app.route('./getSymptoms', methods = ['GET'])
 def get_symptoms():
@@ -56,16 +52,12 @@ def get_symptoms():
     symptom = None
     if('id' in request.args):
         id = int(request.args['id'])
-        symptoms = get_symptoms(id, user_id, symptom)
-        return jsonify(symptoms) #should only return one symptom since id was specified
     if('user_id' in request.args):
         user_id = int(request.args['user_id'])
-        symptoms = get_symptoms(id, user_id, symptom)
-        return jsonify(symptoms) # should return all symptoms associated with user
     if('symptom' in request.args):
         symptom = request.args['symptom']
-        symptoms = get_symptoms(id, user_id, symptom)
-        return jsonify(symptoms) 
+    symptoms = get_symptoms(id, user_id, symptom)
+    return jsonify(symptoms) 
     
 
 @app.route('./getMessages', methods = ['GET'])
@@ -74,11 +66,9 @@ def get_messages():
     user_id = None
     if('id' in request.args):
         id = int(request.args['id'])
-        messages=get_message(id, user_id)
-        return jsonify(messages) #should return a specific message
     if('user_id' in request.args):
         user_id = int(request.args['user_id'])
-        messages=get_message(id, user_id) 
-        return jsonify(messages) #should return all messages associated with user
+    messages=get_message(id, user_id) 
+    return jsonify(messages) 
 
 app.run()
