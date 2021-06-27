@@ -10,11 +10,11 @@ def under_twenty(phone_num, message):
     symptoms = w.word_search(message)
     
     for symptom in symptoms:
-            create_new_symptom(userID, symptom, message)
-            if len(symptomMessage) == 0:
-                symptomMessage += symptom
-            else:
-                symptomMessage = f"{symptomMessage}, {symptom}"
+        create_new_symptom(userID, symptom, message)
+        if len(symptomMessage) == 0:
+            symptomMessage += symptom
+        else:
+            symptomMessage = f"{symptomMessage}, {symptom}"
 
     
     txtResponse = {

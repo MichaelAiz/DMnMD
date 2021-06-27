@@ -6,11 +6,15 @@ from helper.new_user import new_user
 from helper.over_twenty import over_twenty
 from helper.under_twenty import under_twenty
 from helper.confirm_registration import confirm_registration
+from helper.save_message import save_message
 import os
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 from twilio.rest import Client
+from flask_cors import CORS
+from bson.json_util import dumps
 
 app = Flask(__name__)
+CORS(app)
 sio = SocketIO(app, cors_allowed_origins="*")
 
 os.environ["PYTHONPATH"] = os.getcwd()
@@ -41,6 +45,7 @@ def recieve_msg():
     message = request.values.get('Body', None)
     phone = request.values.get('From')
     sio.emit('message', {'message': message, 'phone': phone})
+    save_message(phone, message)
 
     fn = function_selector(phone, message)
 
@@ -52,45 +57,59 @@ def recieve_msg():
 
 
 @app.route('/getUser', methods=['GET'])
-def get_user():
+def user():
     id = None
-    phone_num = None
+    phone = None
     name = None
+    res = []
     if 'id' in request.args:
         id = int(request.args['id'])
     if 'phone_num' in request.args:
         phone = request.args['phone_num']
     if 'name' in request.args:
         name = request.args['name']
-    user = get_user(id, name, phone)
-    return jsonify(user)
+    users = get_user(id, name, phone)
+
+    for user in users:
+        res.append(user)
+    return dumps(res)
 
 
 @app.route('/getSymptoms', methods=['GET'])
-def get_symptoms():
+def symptoms():
     id = None
     user_id = None
     symptom = None
+    res = []
     if 'id' in request.args:
         id = int(request.args['id'])
     if 'user_id' in request.args:
         user_id = int(request.args['user_id'])
     if 'symptom' in request.args:
         symptom = request.args['symptom']
+
     symptoms = get_symptoms(id, user_id, symptom)
-    return jsonify(symptoms)
+
+    for symptom in symptoms:
+        res.append(symptom)
+
+    return dumps(res)
 
 
 @app.route('/getMessages', methods=['GET'])
-def get_messages():
+def messages():
     id = None
     user_id = None
+    res = []
     if 'id' in request.args:
         id = int(request.args['id'])
     if 'user_id' in request.args:
         user_id = int(request.args['user_id'])
     messages = get_message(id, user_id)
-    return jsonify(messages)
+
+    for message in messages:
+        res.append(message)
+    return dumps(res)
 
 
 sio.run(app)

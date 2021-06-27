@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import ReactDOM from 'react-dom';
 import { Table, Button } from 'reactstrap';
 import Modal from "react-bootstrap/Modal";
-import { MessageBox, Button as ChatButton } from "react-chat-elements";
+import { MessageList, Button as ChatButton } from "react-chat-elements";
 import { Input } from "react-chat-elements";
 import 'react-chat-elements/dist/main.css';
 import { sendMessage } from './socket'
@@ -48,10 +48,15 @@ export default function PatientList() {
     const [show, setShow] = useState(false);
     const [message, setMessage] = useState();
     const [activePhone, setActivePhone] = useState()
+    const [activeUser, setActiveUser] = useState(false)
+    const [messageList, setMessageList] = useState([])
+
+    const phone_id_lookup = {}
 
     const handleClose = () => setShow(false);
     const handleShow = (event) => {
         setActivePhone(event.target.id)
+        setActiveUser(phone_id_lookup[event.target.id])
         setShow(true)
     };
 
@@ -61,6 +66,29 @@ export default function PatientList() {
 
     function loadSymptoms() {
         fetch('http://localhost:5000/getSymptoms').then(res => res.json()).then(res => setSymptoms(res))
+    }
+
+    function loadMessages() {
+        fetch('http://localhost:5000/getMessages').then(res => res.json()).then(res => setMessageList(res))
+    }
+
+    function generateMessageList() {
+        return messageList
+            .filter(message => {
+                if (message.hasOwnProperty('user_id')) {
+                    return message.user_id["$oid"] == activeUser
+                }
+                else {
+                    return false
+                }
+            })
+            .map(message => {
+                return {
+                    position: 'left',
+                    type: 'text',
+                    text: message.content,
+                }
+            })
     }
 
     function capitalize(str) {
@@ -78,6 +106,7 @@ export default function PatientList() {
     if (patients.length == 0) {
         loadPatients()
         loadSymptoms()
+        loadMessages()
     }
 
     return (
@@ -86,33 +115,34 @@ export default function PatientList() {
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
-            <Modal.Body>
-            <Input
-                    placeholder="Type here..."
-                multiline={true}
-                onChange={onEntry}
-                rightButtons={
-                    <ChatButton
-                    color='white'
-                    backgroundColor='black'
-                    text='Send'
-                    onClick={onSend}/>
-                }/>
+                <Modal.Body>
+                <Input
+                        placeholder="Type here..."
+                    multiline={true}
+                    onChange={onEntry}
+                    rightButtons={
+                        <ChatButton
+                        color='white'
+                        backgroundColor='black'
+                        text='Send'
+                        onClick={onSend}/>
+                    }/>
 
-            <MessageBox 
-                position={'center'}
-                type={'text'}
-                text={''}
-            />
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                Save Changes
-                </Button>
-            </Modal.Footer>
+                <MessageList
+                className='message-list'
+                lockable={true}
+                toBottomHeight={'100%'}
+                dataSource={generateMessageList()}
+                />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                    Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                    </Button>
+                </Modal.Footer>
         </Modal>
             <View style={PatientListStyles.ToolbarBackground} />
             <img
@@ -168,7 +198,8 @@ export default function PatientList() {
                     </thead>
                 {
                     patients.map(patientData => {
-                        const filtered = symptoms.slice(0, 3)
+                        phone_id_lookup[patientData.phone] = patientData._id["$oid"]
+                        let filtered = symptoms
                         .filter(symptomData => symptomData.user_id["$oid"] == patientData._id["$oid"])
                         return (
                             <tr>
@@ -176,10 +207,13 @@ export default function PatientList() {
                                 <td>{patientData.phone}</td>
                                 <td>
                                 {
-                                filtered.map((symptom, i) => {
-                                    if (filtered.length > 1 && i < filtered.length - 1) return `${capitalize(symptom.symptom)}, `
-                                    else return capitalize(symptom.symptom)
-                                })}
+                                [... new Set(
+                                    filtered.map((symptom, i) => {
+                                        if (filtered.length > 1 && i < filtered.length - 1) return `${capitalize(symptom.symptom)}, `
+                                        else return capitalize(symptom.symptom)
+                                    })
+                                )]
+                                }
                                 </td>
                                 <td><Button id={patientData.phone} onClick={handleShow}>Message</Button></td>
                             </tr>
