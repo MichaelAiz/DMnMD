@@ -31,7 +31,7 @@ function onClickPatient() {
 }
 
 function onClickMessage() {
-
+    alert("You are already on this page.")
 }
 
 function Messages() {
@@ -119,7 +119,7 @@ const MessageStyles = StyleSheet.create({
     },
     MessageButton: {
         left: 0,
-        top: 220,
+        top: 190,
         width: 75,
         height: 60,
         //backgroundColor: 'green'
