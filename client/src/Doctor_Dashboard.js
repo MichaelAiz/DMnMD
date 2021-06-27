@@ -2,17 +2,29 @@ import React from 'react'
 import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import { Svg } from 'react-native-svg'
 import ReactDOM from 'react-dom';
+
+// Pages
 import Homepage from './Homepage.js';
+import PatientList from './Patient_List2.js';
 
 // Images
 import home_icon from './Images/home.png';
 import signout_icon from './Images/sign-out.png';
 import users_icon from './Images/users.png';
 
-function onClick() {
+function onClickHome() {
     ReactDOM.render(
         <React.StrictMode>
             <Homepage />
+        </React.StrictMode>,
+        document.getElementById('root')
+    );
+}
+
+function onClickPatient() {
+    ReactDOM.render(
+        <React.StrictMode>
+            <PatientList />
         </React.StrictMode>,
         document.getElementById('root')
     );
@@ -38,7 +50,16 @@ function DoctorDashboard() {
                     width: 55,
                     //height: 50,
                 }}/>
-            <TouchableOpacity onPress={onClick} style={DoctorDashboardStyles.HomeButton} />
+            <TouchableOpacity onPress={onClickHome} style={DoctorDashboardStyles.HomeButton} />
+            <img
+                src={users_icon}
+                style={{
+                    position: "absolute",
+                    top: 120,
+                    left: 10,
+                    width: 55,
+                }} />
+            <TouchableOpacity onPress={onClickPatient} style={DoctorDashboardStyles.PatientButton} />
             <img
                 src={signout_icon}
                 style={{
@@ -48,14 +69,7 @@ function DoctorDashboard() {
                     width: 45,
                     //height: 50,
                 }} />
-            <img
-                src={users_icon}
-                style={{
-                    position: "absolute",
-                    top: 120,
-                    left: 10,
-                    width: 55,
-                }} />
+
             <TouchableOpacity onPress={cancer} style={DoctorDashboardStyles.CancerButton} />    {/*Definitely not the cancer button*/}
 
             <View style={DoctorDashboardStyles.Box4} />
@@ -157,6 +171,13 @@ const DoctorDashboardStyles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 15,
+        width: 75,
+        height: 60,
+    },
+    PatientButton: {
+        position: 'absolute',
+        left: 0,
+        top: 110,
         width: 75,
         height: 60,
     },
