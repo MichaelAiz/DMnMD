@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import ReactDOM from 'react-dom';
-
+import { Table, Button } from 'reactstrap';
 // Pages
 import Homepage from './Homepage.js';
 import Messages from './Messages.js';
@@ -35,6 +35,26 @@ function onClickPatient() {
 }
 
 export default function PatientList() {
+    const [patients, setPatients] = useState([])
+    const [symptoms, setSymptoms] = useState([])
+
+    function loadPatients() {
+        fetch('http://localhost:5000/getUser').then(res => res.json()).then(res => setPatients(res))
+    }
+
+    function loadSymptoms() {
+        fetch('http://localhost:5000/getSymptoms').then(res => res.json()).then(res => setSymptoms(res))
+    }
+
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
+
+    if (patients.length == 0) {
+        loadPatients()
+        loadSymptoms()
+    }
+
     return (
         <View style={PatientListStyles.PatientList}>
             <View style={PatientListStyles.ToolbarBackground} />
@@ -79,7 +99,39 @@ export default function PatientList() {
                     height: 50,
                 }}
                 alt="" />
-            <TouchableOpacity onPress={onClickMessage} style={PatientListStyles.MessageButton} />
+            <View style={PatientListStyles.BigPatientBox}>
+                <h2><b>Patient Dashboard</b></h2>
+                <Table bordered={true} striped={true}>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Recent Symptoms</th>
+                        </tr>
+                    </thead>
+                {
+                    patients.map(patientData => {
+                        const filtered = symptoms.slice(0, 3)
+                        .filter(symptomData => symptomData.user_id["$oid"] == patientData._id["$oid"])
+                        return (
+                            <tr>
+                                <td>{patientData.name}</td>
+                                <td>{patientData.phone}</td>
+                                <td>
+                                {
+                                filtered.map((symptom, i) => {
+                                    if (filtered.length > 1 && i < filtered.length - 1) return `${capitalize(symptom.symptom)}, `
+                                    else return capitalize(symptom.symptom)
+                                })}
+                                </td>
+                                <td><Button>Message</Button></td>
+                            </tr>
+                        )
+                    })
+                }
+                </Table>
+            </View>
+            {/* <TouchableOpacity onPress={onClickMessage} style={PatientListStyles.MessageButton} />
             <View style={PatientListStyles.BigPatientBox}>
             <Text style={PatientListStyles.Patients}>
                 Patients:
@@ -147,7 +199,7 @@ export default function PatientList() {
             {/*        Symptoms: Broken arm*/}
             {/*    </Text>*/}
                 {/*</View>*/}
-            </View>
+            {/* </View> */}
         </View>
     )
 }
@@ -170,7 +222,7 @@ const PatientListStyles = StyleSheet.create({
         top: 0,
         width: 75,
         height: window.innerHeight,
-        backgroundColor: 'blue'
+        backgroundColor: '#F0F8FF'
     },
     BigPatientBox: {
         position: 'absolute',
@@ -178,7 +230,6 @@ const PatientListStyles = StyleSheet.create({
         top: (window.innerHeight / 2) - ((window.innerHeight * 0.9) / 2),
         width: window.innerWidth * 0.85,
         height: window.innerHeight * 0.90,
-        backgroundColor: '#c4c4c4',
         borderRadius: 15,
     },
     Patients: {
