@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet , TouchableOpacity} from 'react-native'
-import { Svg } from 'react-native-svg'
+import { View, Text, StyleSheet , TouchableOpacity} from 'react-native'
 import ReactDOM from 'react-dom';
 
 // Pages
@@ -41,8 +40,8 @@ function PatientList () {
       <Text style={PatientListStyles.Patients}>
         Patients:
       </Text>
-      <View style={PatientListStyles.Patient1_0}>
-        <View style={PatientListStyles.Patient1_0} />
+      <View style={PatientListStyles.Patient1}>
+        <View style={PatientListStyles.Patient1} />
         <Text style={PatientListStyles.JaneDoe}>
           Jane Doe
         </Text>
