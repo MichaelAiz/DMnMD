@@ -9,7 +9,7 @@ def new_user(phone, message):
 
     txtResponse = {
         'status': True,
-        'message': "Hello and welcome to DMdaMD! Please respond with your full name."
+        'message': "Hello and welcome to DMnMD! Please respond with your full name."
     }
 
     return txtResponse
