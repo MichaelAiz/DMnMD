@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import ReactDOM from 'react-dom';
 import { Table, Button } from 'reactstrap';
+import Modal from "react-bootstrap/Modal";
+import { MessageBox, Button as ChatButton } from "react-chat-elements";
+import { Input } from "react-chat-elements";
+import 'react-chat-elements/dist/main.css';
+import { sendMessage } from './socket'
 // Pages
 import Homepage from './Homepage.js';
 import Messages from './Messages.js';
-
 // Images
 import home_icon from './Images/home.png';
 import signout_icon from './Images/sign-out.png';
@@ -30,6 +34,10 @@ function onClickMessage() {
     );
 }
 
+function onClick() {
+    
+}
+
 function onClickPatient() {
     alert("You are already on this page.")
 }
@@ -37,6 +45,15 @@ function onClickPatient() {
 export default function PatientList() {
     const [patients, setPatients] = useState([])
     const [symptoms, setSymptoms] = useState([])
+    const [show, setShow] = useState(false);
+    const [message, setMessage] = useState();
+    const [activePhone, setActivePhone] = useState()
+
+    const handleClose = () => setShow(false);
+    const handleShow = (event) => {
+        setActivePhone(event.target.id)
+        setShow(true)
+    };
 
     function loadPatients() {
         fetch('http://localhost:5000/getUser').then(res => res.json()).then(res => setPatients(res))
@@ -50,6 +67,14 @@ export default function PatientList() {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
 
+    function onEntry(event) {
+        setMessage(event.target.value)
+    }
+
+    function onSend() {
+        sendMessage(activePhone, message)
+    }
+
     if (patients.length == 0) {
         loadPatients()
         loadSymptoms()
@@ -57,6 +82,38 @@ export default function PatientList() {
 
     return (
         <View style={PatientListStyles.PatientList}>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+            <Modal.Body>
+            <Input
+                    placeholder="Type here..."
+                multiline={true}
+                onChange={onEntry}
+                rightButtons={
+                    <ChatButton
+                    color='white'
+                    backgroundColor='black'
+                    text='Send'
+                    onClick={onSend}/>
+                }/>
+
+            <MessageBox 
+                position={'center'}
+                type={'text'}
+                text={''}
+            />
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                Save Changes
+                </Button>
+            </Modal.Footer>
+        </Modal>
             <View style={PatientListStyles.ToolbarBackground} />
             <img
                 src={home_icon}
@@ -124,7 +181,7 @@ export default function PatientList() {
                                     else return capitalize(symptom.symptom)
                                 })}
                                 </td>
-                                <td><Button>Message</Button></td>
+                                <td><Button id={patientData.phone} onClick={handleShow}>Message</Button></td>
                             </tr>
                         )
                     })
