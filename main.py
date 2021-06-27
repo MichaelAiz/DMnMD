@@ -42,7 +42,7 @@ def get_user():
         phone = request.args['phone_num']
     if('name' in request.args):
         name = request.args['name']
-    user = get_user(id, phone_num, name)
+    user = get_user(id, name, phone)
     return jsonify(user)
 
 @app.route('./getSymptoms', methods = ['GET'])
