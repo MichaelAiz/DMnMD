@@ -7,7 +7,7 @@ myclient = pymongo.MongoClient(os.environ["MONGO_URI"])
 mydb = myclient["DMnMD"]
 mycol = mydb["users"]
 
-def confirm_registration(phone_num):
+def confirm_registration(phone_num, msg):
     mycol.update_one({'phone': phone_num}, {'$set': {'state': 'confirmed'}})
 
     txtResponse = {
