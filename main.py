@@ -1,13 +1,20 @@
 from flask import Flask, request, jsonify
+from data.db_functions import get_user, get_symptoms, get_message
 from helper.function_selector import function_selector
 from helper.twilio_helper import generate_response
 from helper.new_user import new_user
-from data.db_functions import get_user
+from helper.over_twenty import over_twenty
+from helper.confirm_registration import confirm_registration
+import os
 
 app = Flask(__name__)
 
+os.environ["PYTHONPATH"] = os.getcwd()
+
 FUNCTIONS = {
-    'new_user': new_user
+    'new_user': new_user,
+    "confirm_registration": confirm_registration,
+    "over_twenty": over_twenty
 }
 
 
@@ -67,11 +74,11 @@ def get_messages():
     user_id = None
     if('id' in request.args):
         id = int(request.args['id'])
-        messages=get_messages(id, user_id)
+        messages=get_message(id, user_id)
         return jsonify(messages) #should return a specific message
     if('user_id' in request.args):
         user_id = int(request.args['user_id'])
-        messages=get_messages(id, user_id) 
+        messages=get_message(id, user_id) 
         return jsonify(messages) #should return all messages associated with user
-        
+
 app.run()
