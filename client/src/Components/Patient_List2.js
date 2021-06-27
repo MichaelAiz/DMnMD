@@ -113,7 +113,7 @@ export default function PatientList() {
         <View style={PatientListStyles.PatientList}>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Messaging</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Input
