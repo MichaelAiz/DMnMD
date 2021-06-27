@@ -13,3 +13,5 @@ def new_user(phone, message):
     }
 
     return txtResponse
+
+

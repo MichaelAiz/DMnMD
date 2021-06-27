@@ -7,7 +7,13 @@ client = language_v1.LanguageServiceClient()
 text = "Hello doctor. Recently I feel my back hurting. It hurts when I sit and when I walk."
 document = {"content": text, "type_": language_v1.Document.Type.PLAIN_TEXT}
 response = client.classify_text(request={'document': document})
+
 print(text)
+
 for category in response.categories:
     print(f"Category name: {category.name}")
     print(f"Category Confidence: {category.confidence}")
+
+
+
+
