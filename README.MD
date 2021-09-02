@@ -17,7 +17,7 @@ In reality, this hackathon transpired quite smoothly. We used a feature-branch G
 In reality, the biggest accomplishment we can think of is having a working prototype for this app. Going into the hackathon, we had a plethora of ideas waiting to be implemented. So much so, that we actually had to shave some off to keep our sanity in check! Another incredible accomplishment we believe is worth mentioning is how organized we stayed throughout the hackathon. We began with an great architecture, stuck to our plan, used agile-type delegation, and came out feeling great!
 
 ## What we learned 🧠
-Our group learned a lot of different things this hackathon! This ranged from socket implementation all the way to fixing relative file pathing errors! There truly isn't enough to fit in this passage.
+Our group learned a lot of different things this hackathon! This ranged from socket implementation all the way to fixing relative file pathing errors! There truly is too much to fit in this passage.
 
 ## What's next for DMnMD ▶️
 We were going to add an auto-diagnose feature, but in the interest of time decided to scrap this idea. This may be on the agenda!
